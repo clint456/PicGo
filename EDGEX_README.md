@@ -9,8 +9,8 @@ The EdgeX MQTT Device Service enables EdgeX to communicate with MQTT-based devic
 ## Prerequisites
 
 Before running this service, ensure you have:
-- Docker installed (version 19.03 or later)
-- Docker Compose installed (version 1.27 or later)
+- Docker installed (version 20.10 or later)
+- Docker Compose installed (version 2.0 or later)
 - Required environment variables set
 
 ## Environment Variables
