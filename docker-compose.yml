@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  device-mqtt:
+    image: ${DEVICE_SVC_REPOSITORY}/device-mqtt${ARCH}:${DEVICE_MQTT_VERSION}
+    command: "${CP_FLAGS} --registry"
+    ports:
+      - "127.0.0.1:59982:59982"
+    container_name: edgex-device-mqtt
+    hostname: edgex-device-mqtt
+    read_only: true
+    restart: always
+    networks:
+      - edgex-network
+    env_file:
+      - common-non-security.env
+    environment:
+      SERVICE_HOST: edgex-device-mqtt
+      MQTTBROKERINFO_HOST: edgex-mqtt-broker
+    depends_on:
+      # Note: These services should be defined in a separate compose file or in an extended configuration
+      - core-keeper
+      - core-data
+      - core-metadata
+      - mqtt-broker
+      - core-common-config-bootstrapper
+    security_opt:
+      - no-new-privileges:true
+    user: "${EDGEX_USER}:${EDGEX_GROUP}"
+    volumes:
+      # use host timezone
+      - /etc/localtime:/etc/localtime:ro
+
+networks:
+  edgex-network:
+    driver: bridge
